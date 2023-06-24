@@ -1408,11 +1408,6 @@ button,
   display: flex;
 }
 
-.contractor-limits {
-  width: auto;
-  flex-grow: 1;
-}
-
 .users-list__table .users-list__table-body .users-list__table-name {
   font-weight: 600;
 }
