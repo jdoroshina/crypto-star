@@ -1,6 +1,9 @@
 import { getDataUser, getDataContractors } from './api.js';
 import { createUserProfile } from './user.js';
-import { createContractorsProfile } from './contractors.js';
+import { filterContractors } from './filter.js';
 
 getDataUser(createUserProfile, () => {console.log('userdataalert');});//добавь вторую функцию alertmessage
-getDataContractors(createContractorsProfile, () => {console.log('contractorsalert');});//добавь вторую функцию alertmessage
+
+getDataContractors((contractorsData) => {
+  filterContractors(contractorsData);
+}, () => {console.log('usercontralert');});

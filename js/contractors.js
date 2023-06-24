@@ -5,19 +5,21 @@ const contractorTemplate = document
   .content.querySelector('.users-list__table-row');
 const contractorsContainer = document.querySelector('.users-list__table-body');
 
-const getMaxLimit = (data) => {
-  if (data.status === 'seller') {
-    return (data.balance.amount * data.exchangeRate).toFixed(DECIMAL_PLACES);
+const getMaxLimit = (contractors) => {
+  console.log('contractors.status');
+  if (contractors.status === 'seller') {
+    return (contractors.balance.amount * contractors.exchangeRate).toFixed(DECIMAL_PLACES);
   } else {
-    return data.balance.amount;
+    return contractors.balance.amount;
   }
 };
 
-const getLimits = (data, element) => {
+const getLimits = (contractors, element) => {
   const limitsContainer = element.querySelector('.contractor-limits');
-  const maxLimit = getMaxLimit(data);
-  limitsContainer.textContent = `${data.minAmount} ₽ - ${maxLimit} ₽`;
+  const maxLimit = getMaxLimit(contractors);
+  limitsContainer.textContent = `${contractors.minAmount} ₽ - ${maxLimit} ₽`;
 };
+
 
 const getPaymentMethods = (methods, element) => {
   const paymentMethodsContainer = element.querySelector('.payment-methods-list');
@@ -30,8 +32,13 @@ const getPaymentMethods = (methods, element) => {
 };
 
 const createContractorsProfile = (contractors) => {
+  const container = contractorsContainer;
+  // Очищаем контейнер перед рендером новых контрагентов
+  container.innerHTML = '';
+
   contractors.forEach((contractor) => {
     console.log(contractor.status);
+    console.log(contractor);
     const contractorElement = contractorTemplate.cloneNode(true);
 
     // const tableBtn = contractorElement.querySelector('button');
