@@ -6,4 +6,4 @@ getDataUser(createUserProfile, () => {console.log('userdataalert');});//доба
 
 getDataContractors((contractorsData) => {
   filterContractors(contractorsData);
-}, () => {console.log('usercontralert');});
+}, () => {console.log('contrdataalert');});

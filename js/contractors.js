@@ -1,4 +1,4 @@
-const DECIMAL_PLACES = 0;
+import { formatCurrency } from './utils.js';
 
 const contractorTemplate = document
   .querySelector('#user-table-row__template')
@@ -8,7 +8,7 @@ const contractorsContainer = document.querySelector('.users-list__table-body');
 const getMaxLimit = (contractors) => {
   console.log('contractors.status');
   if (contractors.status === 'seller') {
-    return (contractors.balance.amount * contractors.exchangeRate).toFixed(DECIMAL_PLACES);
+    return (contractors.balance.amount * contractors.exchangeRate)
   } else {
     return contractors.balance.amount;
   }
@@ -17,7 +17,8 @@ const getMaxLimit = (contractors) => {
 const getLimits = (contractors, element) => {
   const limitsContainer = element.querySelector('.contractor-limits');
   const maxLimit = getMaxLimit(contractors);
-  limitsContainer.textContent = `${contractors.minAmount} ₽ - ${maxLimit} ₽`;
+  console.log(typeof maxLimit);
+  limitsContainer.textContent = `${formatCurrency(contractors.minAmount)} ₽ - ${formatCurrency(maxLimit)} ₽`;
 };
 
 
@@ -45,7 +46,7 @@ const createContractorsProfile = (contractors) => {
     contractorElement.querySelector('#contractor-name').textContent = contractor.userName;
     contractorElement.querySelector('#contractor-verified-icon').style.display = contractor.isVerified ? 'block' : 'none';
     contractorElement.querySelector('.contractor-currency').textContent = contractor.balance.currency;
-    contractorElement.querySelector('.contractor-echange-rate').textContent = `${contractor.exchangeRate} ₽`;
+    contractorElement.querySelector('.contractor-echange-rate').textContent = `${formatCurrency(contractor.exchangeRate)} ₽`;
     getLimits(contractor, contractorElement);
     getPaymentMethods(contractor.paymentMethods, contractorElement);
     contractorsContainer.appendChild(contractorElement);

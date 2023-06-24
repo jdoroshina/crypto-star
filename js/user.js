@@ -1,3 +1,5 @@
+import { formatCurrency } from './utils.js';
+
 const CurrencyName = {
   KEKS: 'KEKS',
   RUBLE: 'RUB',
@@ -10,7 +12,7 @@ const userName = document.querySelector('#user-profile-name');
 
 const getBalance = (balances, currency) => {
   const foundBalanceByCurrency = balances.find((balance) => balance.currency === currency);
-  return foundBalanceByCurrency ? foundBalanceByCurrency.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : 0;
+  return foundBalanceByCurrency ? formatCurrency(foundBalanceByCurrency.amount) : 0;
 };
 
 const createUserProfile = (user) => {
