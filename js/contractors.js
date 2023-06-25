@@ -6,7 +6,6 @@ const contractorTemplate = document
 const contractorsContainer = document.querySelector('.users-list__table-body');
 
 const getMaxLimit = (contractors) => {
-  console.log('contractors.status');
   if (contractors.status === 'seller') {
     return (contractors.balance.amount * contractors.exchangeRate)
   } else {
@@ -17,7 +16,6 @@ const getMaxLimit = (contractors) => {
 const getLimits = (contractors, element) => {
   const limitsContainer = element.querySelector('.contractor-limits');
   const maxLimit = getMaxLimit(contractors);
-  console.log(typeof maxLimit);
   limitsContainer.textContent = `${formatCurrency(contractors.minAmount)} ₽ - ${formatCurrency(maxLimit)} ₽`;
 };
 
@@ -40,6 +38,7 @@ const fillContractorProfile = (contractor, element) => {
   getLimits(contractor, element);
   getPaymentMethods(contractor.paymentMethods, element);
 };
+
 const createContractorsList = (contractors) => {
   const container = contractorsContainer;
   container.innerHTML = '';
@@ -53,11 +52,11 @@ const createContractorsList = (contractors) => {
   });
 };
 
-const createContractorsMapBaloons = (contractors, user) => {
+const createContractorsMapBaloons = (contractors) => {
   const baloonElements = [];
 
   contractors.forEach((contractor) => {
-    if(contractor.paymentMethods.some(method => method.provider === 'Наличные')) {
+    if(contractor.paymentMethods.some(method => method.provider === 'Cash in person')) {
       const baloonElement = document.querySelector('#map-baloon__template').content.cloneNode(true);
 
       fillContractorProfile(contractor, baloonElement);
@@ -65,10 +64,8 @@ const createContractorsMapBaloons = (contractors, user) => {
       baloonElements.push(baloonElement);
     }
   });
-
   return baloonElements;
 };
-
 
 export { createContractorsList, createContractorsMapBaloons };
 
