@@ -558,17 +558,17 @@
         <tr class="users-list__table-row">
             <td class="users-list__table-cell users-list__table-name">
                 <!-- Обратите внимание, что "звёздочка только" у верифицированных пользователей -->
-                <svg id="contractor-verified-icon" width="20" height="20" aria-hidden="true">
+                <svg class="contractor-verified-icon" width="20" height="20" aria-hidden="true">
                     <use xlink:href="#icon-star"></use>
                 </svg>
-                <span id="contractor-name">John Smith</span>
+                <span class="contractor-name">John Smith</span>
             </td>
             <td class="users-list__table-cell users-list__table-currency"><span class="contractor-currency">keks</span></td>
             <td class="users-list__table-cell users-list__table-exchangerate"><span class="contractor-echange-rate">9 999 999&nbsp;₽</span></td>
             <td class="users-list__table-cell users-list__table-cashlimit"><span class="contractor-limits">9 999
                 999&nbsp;₽&nbsp;-&nbsp;9 999 999 000&nbsp;₽</span></td>
             <td class="users-list__table-cell users-list__table-payments">
-                <ul class="users-list__badges-list payment-methods-list">
+                <ul class="users-list__badges-list payment-methods payment-methods-list">
                     <li class="users-list__badges-item badge">BitTransfer</li>
                     <li class="users-list__badges-item badge">CryptoEx</li>
                     <li class="users-list__badges-item badge">Первый криптобанк</li>
@@ -590,18 +590,18 @@
         <div class="user-card contractor">
             <span class="user-card__user-name">
                 <!-- Обратите внимание, что "звёздочка только" у верифицированных пользователей -->
-                <svg width="20" height="20" aria-hidden="true">
+                <svg class="contractor-verified-icon" width="20" height="20" aria-hidden="true">
                     <use xlink:href="#icon-star"></use>
                 </svg>
-                <span>Неопознанный енот</span>
+                <span class="contractor-name">Неопознанный енот</span>
             </span>
             <p class="user-card__cash-item"><span class="user-card__cash-label">Валюта</span><span
-                    class="user-card__cash-data">KEKS</span></p>
+                    class="user-card__cash-data contractor-currency">KEKS</span></p>
             <p class="user-card__cash-item"><span class="user-card__cash-label">Курс</span><span
-                    class="user-card__cash-data">9 999 999 ₽</span></p>
+                    class="user-card__cash-data contractor-echange-rate">9 999 999 ₽</span></p>
             <p class="user-card__cash-item"><span class="user-card__cash-label">Лимит</span><span
-                    class="user-card__cash-data">9 900 ₽ – 9 900 000 000 ₽</span></p>
-            <ul class="user-card__badges-list">
+                    class="user-card__cash-data contractor-limits">9 900 ₽ – 9 900 000 000 ₽</span></p>
+            <ul class="user-card__badges-list payment-methods">
                 <li class="user-card__badges-item badge">BitTransfer</li>
                 <li class="user-card__badges-item badge">CryptoEx</li>
                 <li class="user-card__badges-item badge">Первый криптобанк</li>

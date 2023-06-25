@@ -23,7 +23,7 @@ const getLimits = (contractors, element) => {
 
 
 const getPaymentMethods = (methods, element) => {
-  const paymentMethodsContainer = element.querySelector('.payment-methods-list');
+  const paymentMethodsContainer = element.querySelector('.payment-methods');
   paymentMethodsContainer.innerHTML = '';
 
   if (Array.isArray(methods) && methods.length > 0) {
@@ -31,28 +31,44 @@ const getPaymentMethods = (methods, element) => {
     paymentMethodsContainer.innerHTML = listItems.join('');
   }
 };
+const fillContractorProfile = (contractor, element) => {
+  element.querySelector('.contractor-name').textContent = contractor.userName;
+  element.querySelector('.contractor-verified-icon').style.display = contractor.isVerified ? 'block' : 'none';
+  element.querySelector('.contractor-currency').textContent = contractor.balance.currency;
+  element.querySelector('.contractor-echange-rate').textContent = `${formatCurrency(contractor.exchangeRate)} ₽`;
 
-const createContractorsProfile = (contractors) => {
+  getLimits(contractor, element);
+  getPaymentMethods(contractor.paymentMethods, element);
+};
+const createContractorsList = (contractors) => {
   const container = contractorsContainer;
-  // Очищаем контейнер перед рендером новых контрагентов
   container.innerHTML = '';
 
   contractors.forEach((contractor) => {
-    console.log(contractor.status);
-    console.log(contractor);
     const contractorElement = contractorTemplate.cloneNode(true);
 
-    // const tableBtn = contractorElement.querySelector('button');
-    contractorElement.querySelector('#contractor-name').textContent = contractor.userName;
-    contractorElement.querySelector('#contractor-verified-icon').style.display = contractor.isVerified ? 'block' : 'none';
-    contractorElement.querySelector('.contractor-currency').textContent = contractor.balance.currency;
-    contractorElement.querySelector('.contractor-echange-rate').textContent = `${formatCurrency(contractor.exchangeRate)} ₽`;
-    getLimits(contractor, contractorElement);
-    getPaymentMethods(contractor.paymentMethods, contractorElement);
+    fillContractorProfile(contractor, contractorElement);
+
     contractorsContainer.appendChild(contractorElement);
   });
 };
 
+const createContractorsMapBaloons = (contractors, user) => {
+  const baloonElements = [];
 
-export { createContractorsProfile };
+  contractors.forEach((contractor) => {
+    if(contractor.paymentMethods.some(method => method.provider === 'Наличные')) {
+      const baloonElement = document.querySelector('#map-baloon__template').content.cloneNode(true);
+
+      fillContractorProfile(contractor, baloonElement);
+
+      baloonElements.push(baloonElement);
+    }
+  });
+
+  return baloonElements;
+};
+
+
+export { createContractorsList, createContractorsMapBaloons };
 
