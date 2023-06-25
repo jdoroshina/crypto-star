@@ -1,97 +1,177 @@
-import { createContractorsProfile } from './contractors.js';
+// import { createContractorsList } from './contractors.js';
+
+// const STATUS_BUYER = 'buyer';
+// const STATUS_SELLER = 'seller';
+// // const LIST_VIEW = 'list';
+// // const MAP_VIEW = 'map';
+
+// const contractorsListContainer = document.querySelector('.users-list');
+// const contractorsMapContainer = document.querySelector('.container.map-container');
+// const buyerButton = document.querySelector('.btn-buy');
+// const sellerButton = document.querySelector('.btn-sell');
+// const verifiedCheckbox = document.querySelector('#checked-users');
+// const listViewButton = document.querySelector('.btn-list');
+// const mapViewButton = document.querySelector('.btn-map');
+
+// const isVerifiedContractor = (contractor) => contractor.isVerified;
+
+// // Определение функций для работы с фильтрами
+// const filterByStatus = (contractors, status) => contractors.filter((contractor) => contractor.status === status);
+// const filterByVerification = (contractors, verified) => contractors.filter((contractor) => isVerifiedContractor(contractor) === verified);
+// const isActive = (button) => button.classList.contains('is-active');
+// const isVerifiedChecked = () => verifiedCheckbox.checked;
+
+// // Определение функции для работы с классом "is-active"
+// const toggleActiveClass = (button) => {
+//   if (button === buyerButton || button === sellerButton) {
+//     [buyerButton, sellerButton].forEach((btn) => {
+//       btn.classList.toggle('is-active', btn === button);
+//     });
+//   } else if (button === listViewButton || button === mapViewButton) {
+//     [listViewButton, mapViewButton].forEach((btn) => {
+//       btn.classList.toggle('is-active', btn === button);
+//     });
+//   }
+// };
+
+// // Определение функции для применения фильтров
+// const filterContractors = (contractors) => {
+//   const filteredContractors = isVerifiedChecked() ?
+//     filterByVerification(filterByStatus(contractors, isActive(buyerButton) ? STATUS_SELLER : STATUS_BUYER), true) :
+//     filterByStatus(contractors, isActive(buyerButton) ? STATUS_SELLER : STATUS_BUYER);
+
+//   createContractorsList(filteredContractors);
+// };
+
+// const addFilterEventListeners = (contractorsData) => {
+//   // Навешивание слушателей событий
+//   [buyerButton, sellerButton, listViewButton, mapViewButton, verifiedCheckbox].forEach((btn) => {
+//     btn.addEventListener('click', (event) => {
+//       toggleActiveClass(event.target);
+//       filterContractors(contractorsData);
+//     });
+//   });
+// };
+
+// export { isVerifiedContractor, filterContractors, addFilterEventListeners };
+
+import { createContractorsList } from './contractors.js';
+// import { resetFilter } from './utils.js';
+import { initMap } from './map.js';
 
 const STATUS_BUYER = 'buyer';
 const STATUS_SELLER = 'seller';
-const LIST_VIEW = 'list';
-const MAP_VIEW = 'map';
+
+// const ProviderName = {
+//   CASH: 'Cash in person',
+// };
 
 const buyerButton = document.querySelector('.btn-buy');
 const sellerButton = document.querySelector('.btn-sell');
 const verifiedCheckbox = document.querySelector('#checked-users');
 const listViewButton = document.querySelector('.btn-list');
 const mapViewButton = document.querySelector('.btn-map');
+const usersList = document.querySelector('.users-list');
+const mapContainer = document.querySelector('.container .map');
 
-// Определение функций для работы с фильтрами
+const isVerifiedContractor = (contractor) => contractor.isVerified;
 const filterByStatus = (contractors, status) => contractors.filter((contractor) => contractor.status === status);
-const filterByVerification = (contractors, verified) => contractors.filter((contractor) => contractor.isVerified === verified);
+const filterByVerification = (contractors, verified) => contractors.filter((contractor) => isVerifiedContractor(contractor) === verified);
+// const filterContractorsByPaymentMethod = (contractors, providers) =>
+//   contractors.filter((contractor) =>
+//     contractor.paymentMethods.some((method) =>
+//       providers ? providers.includes(method.provider) : true
+//     )
+//   );
+
+
 const isActive = (button) => button.classList.contains('is-active');
 const isVerifiedChecked = () => verifiedCheckbox.checked;
 
-// const renderFilteredContractors = (contractors, status) => {
-//   const filteredContractors = filterByStatus(contractors, status);
-//   createContractorsProfile(filteredContractors);
-// };
-
-// const filterContractors = (contractors, status, verified, view) => {
-//   let filteredContractors = filterByStatus(contractors, status);
-//   if (verified) {
-//     filteredContractors = filterByVerification(filteredContractors, true);
-//   }
-//   createContractorsProfile(filteredContractors, view);
-// };
-
-// const isActive = (btn) => btn.classList.contains('is-active');
-
-// const filterContractors = (contractors) => {
-//   const buttonBuyer = document.querySelector('.btn-buy');
-//   const buttonSeller = document.querySelector('.btn-sell');
-
-
-//   buttonBuyer.addEventListener('click', () => {
-//     if (!isActive(buttonBuyer)) {
-//       buttonBuyer.classList.add('is-active');
-//       buttonSeller.classList.remove('is-active');
-//       renderFilteredContractors(contractors, STATUS_SELLER);
-//     }
+// const resetFilter = () => {
+//   contractorsContainer.innerHTML = '';
+//   contractorsBuy = [];
+//   contractorsSell = [];
+//   getDataUser((newUser) => {
+//     getDataContractors((newContractors) => {
+//       getContactors(getVerifiedUsers(filter(newContractors)), newUser);
+//       resetMarkers(getVerifiedUsers(getByCash(filter(newContractors))), newUser);
+//     });
 //   });
-
-//   buttonSeller.addEventListener('click', () => {
-//     if (!isActive(buttonSeller)) {
-//       buttonSeller.classList.add('is-active');
-//       buttonBuyer.classList.remove('is-active');
-//       renderFilteredContractors(contractors, STATUS_BUYER);
-//     }
-//   });
-
-//   // Запускаем начальную фильтрацию
-//   if (isActive(buttonBuyer)) {
-//     renderFilteredContractors(contractors, STATUS_SELLER);
-//   } else if (isActive(buttonSeller)) {
-//     renderFilteredContractors(contractors, STATUS_BUYER);
-//   }
 // };
 
-// Определение функции для работы с классом "is-active"
 const toggleActiveClass = (button) => {
-  if (button === buyerButton || button === sellerButton) {
-    [buyerButton, sellerButton].forEach((btn) => {
-      btn.classList.toggle('is-active', btn === button);
-    });
-  } else if (button === listViewButton || button === mapViewButton) {
-    [listViewButton, mapViewButton].forEach((btn) => {
-      btn.classList.toggle('is-active', btn === button);
-    });
+  if (!isActive(button)) {
+    button.classList.add('is-active');
   }
 };
 
+const hideBlock = (block) => {
+  block.style.display = 'none';
+};
 
-// Определение функции для применения фильтров
+const showBlock = (block) => {
+  block.style.display = 'block';
+};
+
 const filterContractors = (contractors) => {
   const filteredContractors = isVerifiedChecked() ?
     filterByVerification(filterByStatus(contractors, isActive(buyerButton) ? STATUS_SELLER : STATUS_BUYER), true) :
     filterByStatus(contractors, isActive(buyerButton) ? STATUS_SELLER : STATUS_BUYER);
 
-  createContractorsProfile(filteredContractors);
+  createContractorsList(filteredContractors);
 };
 
-const addFilterEventListeners = (contractorsData) => {
-  // Навешивание слушателей событий
-  [buyerButton, sellerButton, listViewButton, mapViewButton, verifiedCheckbox].forEach((btn) => {
-    btn.addEventListener('click', (event) => {
-      toggleActiveClass(event.target);
-      filterContractors(contractorsData);
-    });
-  });
+const onBuyerButtonClick = (evt, contractors) => {
+  evt.preventDefault();
+  if (!isActive(buyerButton)) {
+    toggleActiveClass(buyerButton);
+    sellerButton.classList.remove('is-active');
+    filterContractors(contractors);
+  }
 };
 
-export { filterContractors, addFilterEventListeners };
+const onSellerButtonClick = (evt, contractors) => {
+  evt.preventDefault();
+  if (!isActive(sellerButton)) {
+    toggleActiveClass(sellerButton);
+    buyerButton.classList.remove('is-active');
+    filterContractors(contractors);
+  }
+};
+
+const onVerifiedCheckboxClick = (contractors) => () => {
+  filterContractors(contractors);
+};
+
+const onListViewButtonClick = (contractors) => {
+  if (!isActive(listViewButton)) {
+    toggleActiveClass(listViewButton);
+    mapViewButton.classList.remove('is-active');
+    hideBlock(mapContainer);
+    showBlock(usersList);
+    // resetFilter();
+    createContractorsList(contractors);
+  }
+};
+
+const onMapViewButtonClick = (contractors) => {
+  if (!isActive(mapViewButton)) {
+    toggleActiveClass(mapViewButton);
+    listViewButton.classList.remove('is-active');
+    hideBlock(usersList);
+    showBlock(mapContainer);
+    // resetFilter();
+    initMap(contractors);
+  }
+};
+
+const addFilterEventListeners = (contractors) => {
+  buyerButton.addEventListener('click', (evt) => onBuyerButtonClick(evt, contractors));
+  sellerButton.addEventListener('click', (evt) => onSellerButtonClick(evt, contractors));
+  verifiedCheckbox.addEventListener('click', onVerifiedCheckboxClick(contractors));
+  listViewButton.addEventListener('click', () => onListViewButtonClick(contractors));
+  mapViewButton.addEventListener('click', () => onMapViewButtonClick(contractors));
+};
+
+export { isVerifiedContractor, filterContractors, addFilterEventListeners };
